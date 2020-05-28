@@ -1,7 +1,7 @@
 pipeline {
    agent any
    environment {
-       registry = "magalixcorp/k8scicd"
+       registry = "njdocker2014/cicddemo"
        GOCACHE = "/tmp"
    }
    stages {
@@ -40,10 +40,10 @@ pipeline {
               sh 'go test ./*_test.go -v -short'
            }
        }
-       /*
+       
        stage('Publish') {
            environment {
-               registryCredential = 'dockerhub'
+               registryCredential = 'DockerNJ'
            }
            steps{
                script {
@@ -55,6 +55,7 @@ pipeline {
                }
            }
        }
+      /*
        stage ('Deploy') {
            steps {
                script{
