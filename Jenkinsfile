@@ -73,8 +73,8 @@ pipeline {
          steps {
             script{
                sh 'echo ${appimage} -- '
-               sh 'kubectl delete -f service.yml'
-               sh 'kubectl delete -f hello_app1.yml'
+               /* sh 'kubectl delete -f service.yml' */
+               /* sh 'kubectl delete -f hello_app1.yml' */
                
                sh 'sed "s|{{GO_HELLO_APP}}|${appimage}|" hello-app.yml > hello_app1.yml'               
                sh 'kubectl create -f service.yml '
