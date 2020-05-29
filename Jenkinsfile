@@ -55,6 +55,17 @@ pipeline {
                }
            }
        }
+      stage('K8s Connect') {
+         environment {
+            ServiceAccount = '${WORKSPACE}/burnished-case-244609-ecddde5f5747.json'
+         }
+         script{
+            sh ' gcloud auth  activate-service-account --key-file=${ServiceAccount} '
+            sh ' gcloud config set project burnished-case-244609 '
+            sh ' gcloud container clusters get-credentials nj-cluster --zone us-central1-c --project burnished-case-244609 '
+         }
+         
+      }
       /*
        stage ('Deploy') {
            steps {
