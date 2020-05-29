@@ -72,7 +72,8 @@ pipeline {
       stage('Deploy to K8S'){
          steps {
             script{
-               sh 'sed "s|{{GO_HELLO_APP}}|$appimage|" hello-app.yml > hello_app1.yml'
+               sh 'echo ${appimage} -- '
+               sh 'sed "s|{{GO_HELLO_APP}}|${appimage}|" hello-app.yml > hello_app1.yml'
                sh 'kubectl create -f service.yml '
                /* sh 'cat service.log' */
                sh 'kubectl create -f hello_app1.yml'
