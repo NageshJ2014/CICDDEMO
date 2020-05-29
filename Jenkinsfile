@@ -73,9 +73,9 @@ pipeline {
          steps {
             script{
                sh 'sed "s|{{GO_HELLO_APP}}|$appimage|" hello-app.yml > hello_app1.yml'
-               sh 'kubectl create -f service.yml > service.log'
+               kubectl create -f service.yml > service.log
                sh 'cat service.log'
-               sh 'kubectl create -f hello_app1.yml > app.log'
+               kubectl create -f hello_app1.yml > app.log
                sh 'cat app.log'
                
             }
