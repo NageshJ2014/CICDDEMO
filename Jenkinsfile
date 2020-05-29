@@ -61,7 +61,8 @@ pipeline {
          }
          steps {
             script{
-               sh ' gcloud auth  activate-service-account --key-file=${ServiceAccount} '
+               sh ' echo $WORKSPACE/burnished-case-244609-ecddde5f5747.json '
+               sh ' gcloud auth  activate-service-account --key-file=${WORKSPACE}/burnished-case-244609-ecddde5f5747.json '
                sh ' gcloud config set project burnished-case-244609 '
                sh ' gcloud container clusters get-credentials nj-cluster --zone us-central1-c --project burnished-case-244609 '
             }
