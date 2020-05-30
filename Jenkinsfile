@@ -75,8 +75,9 @@ pipeline {
             script{              
                
                def appImage = "${registry}" + ":${BUILD_NUMBER}" 
-               sh '--echo $appImage -- \n'
-               sh 'echo ${appImage} -- '
+               
+               sh ' echo -- ${appImage} -- '
+               sh ' echo -- $appImage -- '
                sh ' if [[ `k get svc hello-svc > /dev/null 2>&1` ]] ; then echo "Service Not Found"; else echo "Service Found, Deleting "; kubectl delete -f service.yml; fi'
                
                sh 'sed "s|{{GO_HELLO_APP}}|${appImage}|" hello-app.yml > hello_app1.yml'               
