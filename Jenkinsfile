@@ -74,7 +74,8 @@ pipeline {
          steps {
             script{              
                
-               def appImage = "${registry}" + ":${BUILD_NUMBER}" 
+               /*def appImage = "${registry}" + ":${BUILD_NUMBER}" */
+               def appImage = "njdocker2014/cicddemo:28"
                
                sh ' echo -- ${appImage} -- '
                sh ' echo -- $appImage -- '
