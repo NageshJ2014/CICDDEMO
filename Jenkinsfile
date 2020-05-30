@@ -103,7 +103,7 @@ pipeline {
                    echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                    echo " $image_id "
                   echo "-- ${image_id} --"
-                  sh "sed -i -e 's|{{GO_HELLO_APP}}|${image_id}|g' hello-app.yml"
+                  sh "sed -i -e 's|{{GO_HELLO_APP}}|${image_id}|g' hello-app.yml > hello_app1.yml"
                    sh 'sed -i \"s|{{GO_HELLO_APP}}|${image_id}|\" hello-app.yml > hello_app1.yml' 
                   sh ' grep -i image hello_app1.yml '
                    /* sh "ansible-playbook  playbook.yml --extra-vars \"image_id=${image_id}\"" */
