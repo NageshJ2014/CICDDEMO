@@ -1,4 +1,3 @@
-String appImage = ""
 pipeline {
    agent any
    environment {
