@@ -1,4 +1,4 @@
-String appimage = ""
+String appImage = ""
 pipeline {
    agent any
    environment {
@@ -62,6 +62,7 @@ pipeline {
          }
          steps {
             script{
+               sh ' echo ${ServiceAccount} --'
                sh ' echo $WORKSPACE/burnished-case-244609-ecddde5f5747.json '
                sh ' gcloud auth  activate-service-account --key-file=${WORKSPACE}/burnished-case-244609-ecddde5f5747.json '
                sh ' gcloud config set project burnished-case-244609 '
@@ -73,10 +74,9 @@ pipeline {
          steps {
             script{
                sh 'echo ${appimage} -- '
-               /* sh 'kubectl delete -f service.yml' */
-               /* sh 'kubectl delete -f hello_app1.yml' */
+               appImage =   registry + ":$BUILD_NUMBER"            
                
-               sh 'sed "s|{{GO_HELLO_APP}}|${appimage}|" hello-app.yml > hello_app1.yml'               
+               sh 'sed "s|{{GO_HELLO_APP}}|${appImage}|" hello-app.yml > hello_app1.yml'               
                sh 'kubectl create -f service.yml '
                /* sh 'cat service.log' */
                sh 'kubectl create -f hello_app1.yml'
