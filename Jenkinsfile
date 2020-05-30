@@ -73,8 +73,10 @@ pipeline {
       stage('Deploy to K8S'){
          steps {
             script{
-               sh 'echo ${appimage} -- '
-               appImage =   registry + ":$BUILD_NUMBER"            
+               
+               appImage =   registry + ":$BUILD_NUMBER"
+               sh 'echo ${appImage} -- '
+               sh 'kubectl delete -f service.yml'
                
                sh 'sed "s|{{GO_HELLO_APP}}|${appImage}|" hello-app.yml > hello_app1.yml'               
                sh 'kubectl create -f service.yml '
