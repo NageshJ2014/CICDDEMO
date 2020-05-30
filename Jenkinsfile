@@ -3,7 +3,7 @@ pipeline {
    environment {
        registry = "njdocker2014/cicddemo"
        GOCACHE = "/tmp"
-       appImage = registry + "$BUILD_NUMBER"
+      appImage = ${registry} + "$BUILD_NUMBER"
    }
    stages {
        stage('Build') {
