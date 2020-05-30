@@ -72,11 +72,11 @@ pipeline {
       }
       stage('Deploy to K8S'){
          steps {
-            script{
+            script{              
                
-               appImage =   registry + ":$BUILD_NUMBER"
+               def appImage = registry + ":$BUILD_NUMBER"
                sh 'echo ${appImage} -- '
-               sh 'kubectl delete -f service.yml'
+               sh ' if [[ `k get svc hello-svc > /dev/null 2>&1` ]] ; then echo "Service Not Found"; else kubectl delete -f service.yml; fi'
                
                sh 'sed "s|{{GO_HELLO_APP}}|${appImage}|" hello-app.yml > hello_app1.yml'               
                sh 'kubectl create -f service.yml '
