@@ -70,7 +70,7 @@ pipeline {
             }
          }
       }
-      stage('Deploy to K8S'){
+     /* stage('Deploy to K8S'){
          steps {
             script{              
                
@@ -90,12 +90,14 @@ pipeline {
             }
          }
       }
+*/
       
        stage ('Deploy') {
            steps {
                script{
                    def image_id = registry + ":$BUILD_NUMBER"
-                   print " $image_id "
+                   echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                   echo " $image_id "
                    /* sh "ansible-playbook  playbook.yml --extra-vars \"image_id=${image_id}\"" */
                }
            }
