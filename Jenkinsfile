@@ -6,7 +6,7 @@ pipeline {
       /* appImage = ${registry} + "$BUILD_NUMBER" */
    }
    stages {
-       stage('Build') {
+      /* stage('Build') {
            agent {
                docker {
                    image 'golang'
@@ -55,7 +55,7 @@ pipeline {
                    }
                }
            }
-       }
+       }*/
       stage('K8s Connect') {
          environment {
             ServiceAccount = '${WORKSPACE}/burnished-case-244609-ecddde5f5747.json'
@@ -95,10 +95,20 @@ pipeline {
        stage ('Deploy') {
            steps {
                script{
+                   def appImage = "njdocker2014/cicddemo:28"
                    def image_id = registry + ":$BUILD_NUMBER"
+                  
+                   sh"""
+                     echo "Tetsting if we can replace a variable in the file"
+                     echo "== ${appImage} =="
+                     "echo ${appImage}"
+                     echo "--starting the next one"
+                     sed -i "s/image: .*$/image: ${appImage}/" hello-app.yml
+                  """
                    echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                    echo " $image_id "
-                   sh 'sed \"s|{{GO_HELLO_APP}}|${image_id}|\" hello-app.yml > hello_app1.yml' 
+                  echo "-- ${image_id} --"
+                   sh 'sed -i \"s|{{GO_HELLO_APP}}|${image_id}|\" hello-app.yml > hello_app1.yml' 
                   sh ' grep -i image hello_app1.yml '
                    /* sh "ansible-playbook  playbook.yml --extra-vars \"image_id=${image_id}\"" */
                }
