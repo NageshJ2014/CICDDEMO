@@ -76,13 +76,13 @@ pipeline {
                
                def appImage = registry + ":$BUILD_NUMBER"
                sh 'echo ${appImage} -- '
-               sh ' if [[ `k get svc hello-svc > /dev/null 2>&1` ]] ; then echo "Service Not Found"; else kubectl delete -f service.yml; fi'
+               sh ' if [[ `k get svc hello-svc > /dev/null 2>&1` ]] ; then echo "Service Not Found"; else echo "Service Found, Deleting "; kubectl delete -f service.yml; fi'
                
                sh 'sed "s|{{GO_HELLO_APP}}|${appImage}|" hello-app.yml > hello_app1.yml'               
-               sh 'kubectl create -f service.yml '
-               /* sh 'cat service.log' */
-               sh 'kubectl create -f hello_app1.yml'
-               /* # sh 'cat app.log' */
+               sh 'kubectl create -f service.yml > service.log 2>&1 '
+                sh 'cat service.log' 
+               sh 'kubectl create -f hello_app1.yml > app.log 2>&1 '
+                sh 'cat app.log' 
                
             }
          }
