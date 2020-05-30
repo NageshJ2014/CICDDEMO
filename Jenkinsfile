@@ -55,7 +55,7 @@ pipeline {
                    }
                }
            }
-       }*/
+       }
       stage('K8s Connect') {
          environment {
             ServiceAccount = '${WORKSPACE}/burnished-case-244609-ecddde5f5747.json'
