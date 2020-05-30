@@ -3,7 +3,7 @@ pipeline {
    environment {
        registry = "njdocker2014/cicddemo"
        GOCACHE = "/tmp"
-      appImage = ${registry} + "$BUILD_NUMBER"
+      /* appImage = ${registry} + "$BUILD_NUMBER" */
    }
    stages {
        stage('Build') {
@@ -74,7 +74,7 @@ pipeline {
          steps {
             script{              
                
-              /* def appImage = registry + ":$BUILD_NUMBER" */
+               def appImage = "${registry}" + ":${BUILD_NUMBER}" */
                sh '--echo $appImage -- \n'
                sh 'echo ${appImage} -- '
                sh ' if [[ `k get svc hello-svc > /dev/null 2>&1` ]] ; then echo "Service Not Found"; else echo "Service Found, Deleting "; kubectl delete -f service.yml; fi'
