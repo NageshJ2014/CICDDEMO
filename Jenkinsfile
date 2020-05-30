@@ -84,7 +84,7 @@ pipeline {
                sh ' if [[ `kubectl get deploy hello-deployment > /dev/null 2>&1` ]] ; then echo "Deployment hello-deployment Not Found"; else echo "Deployment hello-deployment Found, Deleting "; kubectl delete -f hello-app.yml; fi'
                
                
-               sh "sed -i -e 's|GO_HELLO_APP|${appImage}|g' hello-app.yml            
+               sh "sed -i -e 's|GO_HELLO_APP|${appImage}|g' hello-app.yml "        
                sh 'kubectl create -f service.yml > service.log 2>&1 '
                 sh 'cat service.log' 
                sh 'kubectl create -f hello_app1.yml > app.log 2>&1 '
