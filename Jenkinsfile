@@ -6,7 +6,7 @@ pipeline {
       /* appImage = ${registry} + "$BUILD_NUMBER" */
    }
    stages {
-      /* stage('Build') {
+       stage('Build') {
            agent {
                docker {
                    image 'golang'
@@ -70,18 +70,21 @@ pipeline {
             }
          }
       }
-     /* stage('Deploy to K8S'){
+      stage('Deploy to K8S'){
          steps {
             script{              
                
                
-               def appImage = "njdocker2014/cicddemo:28"
-               
+               def appImage = registry + ":$BUILD_NUMBER"
+                              
                sh ' echo -- ${appImage} -- '
                sh ' echo -- $appImage -- '
-               sh ' if [[ `k get svc hello-svc > /dev/null 2>&1` ]] ; then echo "Service Not Found"; else echo "Service Found, Deleting "; kubectl delete -f service.yml; fi'
+               sh ' if [[ `kubectl get svc hello-svc > /dev/null 2>&1` ]] ; then echo "Service Not Found"; else echo "Service Found, Deleting "; kubectl delete -f service.yml; fi'
                
-               sh 'sed "s|{{GO_HELLO_APP}}|${appImage}|" hello-app.yml > hello_app1.yml'               
+               sh ' if [[ `kubectl get deploy hello-deployment > /dev/null 2>&1` ]] ; then echo "Deployment hello-deployment Not Found"; else echo "Deployment hello-deployment Found, Deleting "; kubectl delete -f hello-app.yml; fi'
+               
+               
+               sh "sed -i -e 's|GO_HELLO_APP|${appImage}|g' hello-app.yml            
                sh 'kubectl create -f service.yml > service.log 2>&1 '
                 sh 'cat service.log' 
                sh 'kubectl create -f hello_app1.yml > app.log 2>&1 '
@@ -90,8 +93,8 @@ pipeline {
             }
          }
       }
-*/
-      
+
+     /*
        stage ('Deploy') {
            steps {
                script{
@@ -104,11 +107,11 @@ pipeline {
                    echo " $image_id "
                   echo "-- ${image_id} --"
                   sh "sed -i -e 's|GO_HELLO_APP|${image_id}|g' hello-app.yml > hello_app1.yml"
-                  /* sh 'sed -i \"s|GO_HELLO_APP|${image_id}|\" hello-app.yml > hello_app1.yml' 
-                  sh ' grep -i image hello_app1.yml ' */
-                   /* sh "ansible-playbook  playbook.yml --extra-vars \"image_id=${image_id}\"" */
+                   sh 'sed -i \"s|GO_HELLO_APP|${image_id}|\" hello-app.yml > hello_app1.yml' 
+                  sh ' grep -i image hello_app1.yml ' 
+                   sh "ansible-playbook  playbook.yml --extra-vars \"image_id=${image_id}\"" 
                }
            }
-       } 
+       } */
    }
 }
