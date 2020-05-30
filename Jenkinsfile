@@ -97,14 +97,9 @@ pipeline {
                script{
                    def appImage = "njdocker2014/cicddemo:28"
                    def image_id = registry + ":$BUILD_NUMBER"
-                  
-                   sh"""
-                     echo "Tetsting if we can replace a variable in the file"
-                    
-                     
-                     echo "--starting the next one"
-                     sed -i "s/image: .*$/image: ${appImage}/" hello-app.yml
-                  """
+                   echo "-- appImage = $appImage --"
+                   echo " Printing AppImage = ${appImage} "
+                   
                    echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                    echo " $image_id "
                   echo "-- ${image_id} --"
