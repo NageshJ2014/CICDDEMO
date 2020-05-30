@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: {{GO_HELLO_APP}} 
+        image: GO_HELLO_APP 
         resources:
           requests:
             cpu: 10m
