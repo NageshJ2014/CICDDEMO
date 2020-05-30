@@ -101,7 +101,7 @@ pipeline {
                    sh"""
                      echo "Tetsting if we can replace a variable in the file"
                      echo "== ${appImage} =="
-                     "echo ${appImage}"
+                     echo "-- ${appImage} --"
                      echo "--starting the next one"
                      sed -i "s/image: .*$/image: ${appImage}/" hello-app.yml
                   """
