@@ -1,4 +1,4 @@
-appImage = ""
+String appimage = ""
 pipeline {
    agent any
    environment {
