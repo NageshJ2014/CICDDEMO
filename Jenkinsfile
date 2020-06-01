@@ -79,15 +79,15 @@ pipeline {
                               
                sh ' echo -- ${appImage} -- '
                sh ' echo -- $appImage -- '
-               sh ' if [[ `kubectl get svc hello-svc > /dev/null 2>&1` ]] ; then echo "Service Not Found"; else echo "Service Found, Deleting "; kubectl delete -f service.yml; fi'
+               sh ' if [[ `kubectl get svc hello-svc > /dev/null 2>&1` ]] ; then echo "Service Found, So Deleting";kubectl delete -f service.yml; else echo "Service Not Found";  fi'
                
-               sh ' if [[ `kubectl get deploy hello-deployment > /dev/null 2>&1` ]] ; then echo "Deployment hello-deployment Not Found"; else echo "Deployment hello-deployment Found, Deleting "; kubectl delete -f hello-app.yml; fi'
+               sh ' if [[ `kubectl get deploy hello-deployment > /dev/null 2>&1` ]] ; then echo "Deployment hello-deployment Found, So Deleting ";kubectl delete -f hello-app.yml;  else echo "Deployment hello-deployment Not Found ";  fi'
                
                
                sh "sed -i -e 's|GO_HELLO_APP|${appImage}|g' hello-app.yml "        
                sh 'kubectl create -f service.yml > service.log 2>&1 '
                 sh 'cat service.log' 
-               sh 'kubectl create -f hello_app1.yml > app.log 2>&1 '
+               sh 'kubectl create -f hello_app.yml > app.log 2>&1 '
                 sh 'cat app.log' 
                
             }
