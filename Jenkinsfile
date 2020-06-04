@@ -10,6 +10,7 @@ pipeline {
            agent {
                docker {
                    image 'golang'
+                   args ' -u 0:0'
                }
            }
            steps {
@@ -26,6 +27,7 @@ pipeline {
            agent {
                docker {
                    image 'golang'
+                   args ' -u 0:0'
                }
            }
            steps {                
