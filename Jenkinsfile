@@ -1,5 +1,5 @@
 pipeline {
-   agent any
+   // agent any // To Avoid Checking out at the Pipeline Level
    environment {
        registry = "njdocker2014/cicddemo"
        GOCACHE = "/tmp"
