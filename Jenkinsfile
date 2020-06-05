@@ -1,6 +1,6 @@
 pipeline {
-   agent none
-   // agent any // To Avoid Checking out at the Pipeline Level
+   //agent none // This caused go build runtime error out of Memory
+    agent any // To Avoid Checking out at the Pipeline Level
    environment {
        registry = "njdocker2014/cicddemo"
        GOCACHE = "/tmp"
